@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS content.person_film_work (
     person_id     uuid NOT NULL REFERENCES content.person(id)    ON DELETE CASCADE,
     film_work_id  uuid NOT NULL REFERENCES content.film_work(id) ON DELETE CASCADE,
     role          text NOT NULL,
-    "order"       int,
     created       timestamptz NOT NULL DEFAULT now(),
     CONSTRAINT uq_person_film_role UNIQUE (film_work_id, person_id, role) --один и тот-же человек не может дублироваться в одной и той-же роли
 );
