@@ -43,12 +43,12 @@ class GenreFilmWork(UUIDMixin):
         db_table = "content\".\"genre_film_work"
 
 class Gender(models.TextChoices):
-    MALE = 'male', _('male')
-    FEMALE = 'female', _('female')
+    MALE = 'male', _('Male')
+    FEMALE = 'female', _('Female')
 
 class Person(UUIDMixin, TimeStampedMixin):
     full_name = models.CharField(_('Full name'), max_length=255)
-    gender = models.TextField(_('Gender'), choices=Gender.choices, null=True)
+    gender = models.CharField(_('Gender'), max_length=10, choices=Gender.choices, null=True, blank=True)
 
     class Meta:
         db_table = "content\".\"person"
