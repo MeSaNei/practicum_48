@@ -51,4 +51,11 @@ include(
     'components/internationalization.py',
     'components/application.py',
     'components/validation.py'
-) 
+)
+
+# Секция для отображения debug_toolbar, определяет IP по которым доступен toolbar
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
