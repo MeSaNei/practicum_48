@@ -18,6 +18,9 @@ from split_settings.tools import include
 
 load_dotenv()
 
+# Translation spot
+LOCALE_PATHS = ['movies/locale']
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
