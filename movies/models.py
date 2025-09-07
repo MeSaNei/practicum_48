@@ -20,16 +20,16 @@ class UUIDMixin(models.Model):
 
 class Genre(TimeStampedMixin, UUIDMixin):
     # Первым аргументом обычно идёт человекочитаемое название поля
-    name = models.CharField('name', max_length=255)
+    name = models.CharField(_('Name'), max_length=255)
     # blank=True делает поле необязательным для заполнения.
-    description = models.TextField('description', blank=True)
+    description = models.TextField(_('Description'), blank=True)
 
     class Meta:
         # Ваши таблицы находятся в нестандартной схеме. Это нужно указать в классе модели
         db_table = "content\".\"genre"
         # Следующие два поля отвечают за название модели в интерфейсе
-        verbose_name = 'Жанр'
-        verbose_name_plural = 'Жанры'
+        verbose_name = _('Genre')
+        verbose_name_plural = _('Genres')
     
     def __str__(self):
         return self.name
@@ -47,61 +47,61 @@ class Gender(models.TextChoices):
     FEMALE = 'female', _('female')
 
 class Person(UUIDMixin, TimeStampedMixin):
-    full_name = models.CharField('Full name', max_length=255)
-    gender = models.TextField(_('gender'), choices=Gender.choices, null=True)
+    full_name = models.CharField(_('Full name'), max_length=255)
+    gender = models.TextField(_('Gender'), choices=Gender.choices, null=True)
 
     class Meta:
         db_table = "content\".\"person"
-        verbose_name = 'Человек'
-        verbose_name_plural = 'Люди'
+        verbose_name = _('Man')
+        verbose_name_plural = _('Men')
 
     def __str__(self):
         return self.full_name 
     
 class PersonFilmWork(UUIDMixin):
     class Type(models.TextChoices):
-        ACTOR = 'actor', 'Actor'
-        DIRECTOR = 'director', 'Director'
-        WRITER = 'writer', 'Writer'
-        PRODUCER = 'producer', 'Producer'
-        COMPOSER = 'composer', 'Composer'
-        CINEMATOGRAPHER = 'cinematographer', 'Cinematographer'
-        EDITOR = 'editor', 'Editor'
-        DESIGNER = 'designer', 'Designer'
-        VOICE_ACTOR = 'voice_actor', 'Voice Actor'
+        ACTOR = 'actor', _('Actor')
+        DIRECTOR = 'director', _('Director')
+        WRITER = 'writer', _('Writer')
+        PRODUCER = 'producer', _('Producer')
+        COMPOSER = 'composer', _('Composer')
+        CINEMATOGRAPHER = 'cinematographer', _('Cinematographer')
+        EDITOR = 'editor', _('Editor')
+        DESIGNER = 'designer', _('Designer')
+        VOICE_ACTOR = 'voice_actor', _('Voice Actor')
     
     person = models.ForeignKey('Person', on_delete=models.CASCADE)
     film_work = models.ForeignKey('FilmWork', on_delete=models.CASCADE)
-    role = models.CharField('role', max_length=50, choices=Type.choices)
+    role = models.CharField(_('Role'), max_length=50, choices=Type.choices)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "content\".\"person_film_work" 
-        verbose_name = 'Роль'
-        verbose_name_plural = 'Роли'
+        verbose_name = _('Role')
+        verbose_name_plural = _('Roles')
 
 
 class FilmWork(TimeStampedMixin, UUIDMixin):
     class Type(models.TextChoices):
-        MOVIE = 'movie', 'Movie'
-        TV_SHOW = 'tv_show', 'TV Show'
+        MOVIE = 'movie', _('Movie')
+        TV_SHOW = 'tv_show', _('TV Show')
 
-    title = models.CharField('title', max_length=255)
-    description = models.TextField('description', blank=True)
-    certificate = models.CharField('certificate', max_length=512, blank=True)
-    file_path = models.FileField('file', blank=True, null=True, upload_to='movies/')
-    creation_date = models.DateField('creation date', blank=True, null=True)
-    rating = models.FloatField('rating', blank=True, 
+    title = models.CharField(_('Title'), max_length=255)
+    description = models.TextField(_('Description'), blank=True)
+    certificate = models.CharField(_('Certificate'), max_length=512, blank=True)
+    file_path = models.FileField(_('File'), blank=True, null=True, upload_to='movies/')
+    creation_date = models.DateField(_('Creation date'), blank=True, null=True)
+    rating = models.FloatField(_('Rating'), blank=True, 
                                 validators=[MinValueValidator(0),
                                 MaxValueValidator(100)])
-    type = models.CharField('type', max_length=50, choices=Type.choices)
+    type = models.CharField(_('Type'), max_length=50, choices=Type.choices)
     genres = models.ManyToManyField(Genre, through='GenreFilmWork')
     persons = models.ManyToManyField(Person, through='PersonFilmWork')
 
     class Meta:
         db_table = "content\".\"film_work" 
-        verbose_name = 'Кинопроизведение'
-        verbose_name_plural = 'Кинопроизведения'
+        verbose_name = _('Film work')
+        verbose_name_plural = _('Film works')
 
     def __str__(self):
         return self.title
